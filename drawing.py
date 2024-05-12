@@ -6,8 +6,9 @@ import numpy as np
 from scipy.signal import savgol_filter
 from scipy.interpolate import interp1d
 
-from bangla import alphabet, alphabet_ord, alpha_to_num, num_to_alpha, stringProcessing
-
+# from bangla import alphabet, alphabet_ord, alpha_to_num, num_to_alpha, stringProcessing
+import temp
+alphabet = temp.alphabet
 
 # alphabet = [
 #     '\x00', ' ', '!', '"', '#', "'", '(', ')', ',', '-', '.',
@@ -18,11 +19,11 @@ from bangla import alphabet, alphabet_ord, alpha_to_num, num_to_alpha, stringPro
 #     'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
 #     'y', 'z'
 # ]
-#
-#
-# alphabet_ord = list(map(ord, alphabet))
-# alpha_to_num = defaultdict(int, list(map(reversed, enumerate(alphabet))))
-# num_to_alpha = dict(enumerate(alphabet_ord))
+
+
+alphabet_ord = list(map(ord, alphabet))
+alpha_to_num = defaultdict(int, list(map(reversed, enumerate(alphabet))))
+num_to_alpha = dict(enumerate(alphabet_ord))
 
 MAX_STROKE_LEN = 1200
 MAX_CHAR_LEN = 75
@@ -78,9 +79,9 @@ def encode_ascii(ascii_string):
     """
     encodes ascii string to array of ints
     """
-    test = stringProcessing(ascii_string)
-    processed_string = test.getSequence()
-    return np.array(list(map(lambda x: alpha_to_num[x], processed_string)) + [0])
+    # test = stringProcessing(ascii_string)
+    # processed_string = test.getSequence()
+    return np.array(list(map(lambda x: alpha_to_num[x], ascii_string)) + [0])
 
 
 def denoise(coords):
