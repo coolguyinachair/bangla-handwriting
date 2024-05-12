@@ -6,7 +6,7 @@ import numpy as np
 from scipy.signal import savgol_filter
 from scipy.interpolate import interp1d
 
-from bangla import alphabet, alphabet_ord, alpha_to_num, num_to_alpha
+from bangla import alphabet, alphabet_ord, alpha_to_num, num_to_alpha, stringProcessing
 
 
 # alphabet = [
@@ -78,7 +78,9 @@ def encode_ascii(ascii_string):
     """
     encodes ascii string to array of ints
     """
-    return np.array(list(map(lambda x: alpha_to_num[x], ascii_string)) + [0])
+    test = stringProcessing(ascii_string)
+    processed_string = test.getSequence()
+    return np.array(list(map(lambda x: alpha_to_num[x], processed_string)) + [0])
 
 
 def denoise(coords):
