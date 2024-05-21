@@ -7,18 +7,18 @@ from scipy.signal import savgol_filter
 from scipy.interpolate import interp1d
 
 # from bangla import alphabet, alphabet_ord, alpha_to_num, num_to_alpha, stringProcessing
-import temp
-alphabet = temp.alphabet
+# import temp
+# alphabet = temp.alphabet
 
-# alphabet = [
-#     '\x00', ' ', '!', '"', '#', "'", '(', ')', ',', '-', '.',
-#     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';',
-#     '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
-#     'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y',
-#     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-#     'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-#     'y', 'z'
-# ]
+alphabet = [
+    '\x00', ' ', '!', '"', '#', "'", '(', ')', ',', '-', '.',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';',
+    '?', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+    'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'Y',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+    'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+    'y', 'z'
+]
 
 
 alphabet_ord = list(map(ord, alphabet))

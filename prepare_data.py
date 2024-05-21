@@ -30,7 +30,7 @@ def get_stroke_sequence(filename):
 
 
 def get_ascii_sequences(filename):
-    sequences = open(filename, 'r').read()
+    sequences = open(filename, mode='r', encoding='utf-8').read()
     sequences = sequences.replace(r'%%%%%%%%%%%', '\n')
     sequences = [i.strip() for i in sequences.split('\n')]
     lines = sequences[sequences.index('CSR:') + 2:]
@@ -56,7 +56,8 @@ def collect_data():
     stroke_fnames, transcriptions, writer_ids = [], [], []
     for i, fname in enumerate(fnames):
         print(i, fname)
-        if fname == 'data/raw/ascii/z01/z01-000/z01-000z.txt':
+        # if fname == 'data/raw/ascii/z01/z01-000/z01-000z.txt':
+        if fname == 'data/raw/ascii/z01\\z01-000\\z01-000z.txt':
             continue
 
         head, tail = os.path.split(fname)
@@ -85,6 +86,7 @@ def collect_data():
             writer_id = int('0')
 
         ascii_sequences = get_ascii_sequences(fname)
+        print(len(ascii_sequences), len(line_stroke_fnames))
         assert len(ascii_sequences) == len(line_stroke_fnames)
 
         for ascii_seq, line_stroke_fname in zip(ascii_sequences, line_stroke_fnames):
@@ -110,11 +112,13 @@ if __name__ == '__main__':
     w_id = np.zeros([len(stroke_fnames)], dtype=np.int16)
     valid_mask = np.zeros([len(stroke_fnames)], dtype=np.bool)
 
+    print(f'stroke_fnames: {len(stroke_fnames)} {stroke_fnames}\n\ntranscriptions: {len(transcriptions)} {transcriptions}\n\nwriter_ids: {len(writer_ids)} {writer_ids}')
+
     for i, (stroke_fname, c_i, w_id_i) in enumerate(zip(stroke_fnames, transcriptions, writer_ids)):
-        if i % 200 == 0:
+        if i % 5 == 0:
             print(i, '\t', '/', len(stroke_fnames))
         x_i = get_stroke_sequence(stroke_fname)
-        valid_mask[i] = ~np.any(np.linalg.norm(x_i[:, :2], axis=1) > 60)
+        valid_mask[i] = ~np.any(np.linalg.norm(x_i[:, :2], axis=1) > 100) # changed threshold to consider all files (original value 60)
 
         x[i, :len(x_i), :] = x_i
         x_len[i] = len(x_i)
@@ -126,6 +130,8 @@ if __name__ == '__main__':
 
     if not os.path.isdir('data/processed'):
         os.makedirs('data/processed')
+
+    print(valid_mask, x[valid_mask], x_len[valid_mask], c[valid_mask], c_len[valid_mask], w_id[valid_mask], sep='\n\n')
 
     np.save('data/processed/x.npy', x[valid_mask])
     np.save('data/processed/x_len.npy', x_len[valid_mask])
